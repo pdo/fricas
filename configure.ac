@@ -601,9 +601,12 @@ AC_EGREP_CPP([has_af_unix],
 
 
 AC_CHECK_HEADERS([util.h],
-                   [],
-                   [AC_CHECK_HEADERS([pty.h], [], [])
-                   ]) # HAVE_UTIL_H or HAVE_PTY_H
+  [],
+  [AC_CHECK_HEADERS([pty.h],
+    [],
+    [AC_CHECK_HEADERS([libutil.h],
+      [],
+      [])])]) # HAVE_UTIL_H or HAVE_PTY_H
 
 AC_CHECK_DECL([openpty],
                  [AC_DEFINE([HAVE_OPENPTY_DECL], [1],
@@ -613,6 +616,8 @@ AC_CHECK_DECL([openpty],
 # include <util.h>
 #elif defined(HAVE_PTY_H)
 # include <pty.h>
+#elif defined(HAVE_LIBUTIL_H)
+# include <libutil.h>
 #endif
                  ]) # HAVE_OPENPTY_DECL
 
