@@ -66,7 +66,6 @@ DEFCONST($EmptyString, '"")
 DEFCONST($DoubleQuote, '"_"")
 
 DEFVAR($algebraFormat, true) -- produce 2-d algebra output
-DEFVAR($formulaFormat, false) -- if true produce script formula output
 DEFVAR($fortranFormat, false) -- if true produce fortran output
 DEFVAR($htmlFormat, false) -- if true produce HTML output
 DEFVAR($mathmlFormat, false) -- if true produce Math ML output
@@ -1094,16 +1093,6 @@ spadPrint(x,m) ==
   output(x,m)
   if not $collectOutput then TERPRI $algebraOutputStream
 
-formulaFormat expr ==
-  sff := '(ScriptFormulaFormat)
-  formatFn := getFunctionFromDomain("coerce",sff,[$OutputForm])
-  displayFn := getFunctionFromDomain("display",sff,[sff])
-  SPADCALL(SPADCALL(expr,formatFn),displayFn)
-  if not $collectOutput then
-    TERPRI $algebraOutputStream
-    FORCE_-OUTPUT $formulaOutputStream
-  NIL
-
 fortranFormat expr ==
     ff := '(FortranFormat)
     formatFn :=
@@ -1178,7 +1167,6 @@ output(expr,domain) ==
       texFormat outputDomainConstructor expr
   T := coerceInteractive(objNewWrap(expr,domain),$OutputForm) =>
     x := objValUnwrap T
-    if $formulaFormat then formulaFormat x
     if $fortranFormat then fortranFormat x
     if $algebraFormat then
       mathprintWithNumber x
@@ -1257,6 +1245,9 @@ charybdis(u,start,linelength) ==
   charyTop(u,start,linelength)
 
 charyTop(u,start,linelength) ==
+  linelength < 1 =>
+      sayALGEBRA ['%l,'%b,'"  Too wide to Print",'%d]
+      THROW('output,nil)
   u is ['SC,:l] or u is [['SC,:.],:l] =>
     for a in l repeat charyTop(a,start,linelength)
   u is [['CONCATB,:.],:m,[['SC,:.],:l]] =>
@@ -2109,9 +2100,6 @@ mathPrint1(x,fg) ==
 
 maPrin u ==
   null u => nil
--->
-  if $runTestFlag or $mkTestFlag then
-    $mkTestOutputStack := [COPY u, :$mkTestOutputStack]
   $highlightDelta := 0
   c := CATCH('outputFailure,charybdis(u, $MARGIN, $LINELENGTH))
   c ~= 'outputFailure => c

@@ -75,6 +75,9 @@ testIntegrate("fun2", "x", "rde")
 fun3 := D(x*exp(x*log(x)/(log(x)+1))*log(exp(x*log(x)/(log(x)+1))+1), x)
 testIntegrate("fun3", "x", "rde")
 
+testIntegrate("((2*x^2-3*x)*log(x)-a)*exp(-a*log(log(x))+(x^2-3*x))"
+              "/(x*log(x))", "x", "rde")
+
 -- Rotstein & Bronstein, third case
 -- Integrate[(2581284441*Exp[x] + 1757211400)*Exp[1/(Exp[x]+1) - 10*x]/
 --  (39916800*Exp[3*x] + 119750400*Exp[2*x] + 119750400*Exp[x] + 39916800), x]
@@ -84,6 +87,21 @@ testIntegrate("(2581284541*exp(x) + 1757211400)*exp(1/(exp(x)+1) - 10*x)/"
 
 fun4 := D(log(log(log(x)))*exp(log(x) + x)*(x + 1/(log(x)^2 + x)), x)
 testIntegrate("fun4", "x", "rde")
+
+-- Just algebraic Hermite
+testIntegrate(
+   "(4*(log(x)-1)*(log(x)^2+x+1)^(1/2)+(2*log(x)^2-2*log(x)+x+2))/"
+     "((10*log(x)^2+2*x+2)*(log(x)^2+x+1)^(1/2)+8*log(x)^3+(8*x+8)*log(x))",
+       "x", "alg")
+-- Needs recursive call to integrator
+testIntegrate(
+   "(4*(log(x)-1)*(log(x)^2+x+1)^(1/2)+(2*log(x)^2-2*log(x)+x+2))/"
+     "((10*log(x)^2+2*x+2)*(log(x)^2+x+1)^(1/2)+8*log(x)^3+(8*x+8)*log(x))+"
+       "1/x", "x", "alg")
+testIntegrate(
+   "(4*(log(x)-1)*(log(x)^2+x+1)^(1/2)+(2*log(x)^2-2*log(x)+x+2))/"
+     "((10*log(x)^2+2*x+2)*(log(x)^2+x+1)^(1/2)+8*log(x)^3+(8*x+8)*log(x))+"
+       "1/x^2", "x", "alg")
 
 -- Needs logarithmic derivative in algebraic extension
 testIntegrate("sqrt(z)^I^2", "x", "rde")
@@ -439,6 +457,8 @@ testIntegrate("(log(x)^2+1)*exp((log(x)+1)/log(x))/(x^2*log(x)^3-x^2*log(x))", "
 -- sum
 testIntegrate("(log(x)^2-x*log(x)+x+1)*exp((log(x)+1)/log(x))/(x^2*log(x)^3-x^2*log(x))", "x", "Ei")
 testIntegrate("cosh(x^(1/2))-acoth(1-x)", "x", "Ei")
+testIntegrate("sinh(tan(x))", "x", "Ei")
+testIntegrate("log(1+x)*exp(-x)", "x", "Ei")
 
 -- special Ei-s
 testIntegrate("exp(x^r+1)/x", "x", "Ei")
@@ -529,6 +549,7 @@ testIntegrate("(polylog(3, x) - x*polylog(2, x))/(1 - x)^2", "x", "liou")
 ib := integral(x^(a - 1)*(1 - x)^(b - 1), x)
 testIntegrate("((a + b)*x - a)/(x^(a + 1)*(1 - x)^(b + 1))*ib", "x", "liou")
 testIntegrate("erf(a*x)*erf(b*x)", "x", "liou_erf")
+testIntegrate("log(x)*erf(x)", "x", "liou_Ei")
 
 -- Lambert W
 testIntegrate("lambertW(x)", "x", "lambertW")
@@ -601,6 +622,11 @@ testIntegrate("fun5", "x", "deriv")
 -- bug in li part
 testIntegrate("1/(x*(log(x/a)+1))", "x", "li")
 testIntegrate("1/(x^2*(log(x/a)+1))", "x", "li")
+
+-- algebraic rde
+-- -D(exp(acos(log(x+2))-x+5), x)
+testIntegrate("((x+2)*(1 -log(x+2)^2)^(1/2)+1)*exp(acos(log(x+2))+(5-x))/"
+              "((x+2)*(1 -log(x+2)^2)^(1/2))", "x", "algrde")
 
 -- algebraic extended integration
 s1 := sqrt(exp(x) + 1)
@@ -677,6 +703,13 @@ testIntegrate("1/(sqrt(10) - x^2)^(1/2)", "x", "alg")
 -- Gave ugly result due to mishandled root
 testIntegrate("sin(x^2)/fresnelS(x*(2/pi())^(1/2))", "x", "liou")
 
+-- Was wrongly declared unintegrable
+testIntegrate("((2+x^3)*(1-2*x^3-x^4+x^6)^(1/2))/(-x^3-x^5+x^6)", "x", "alg")
+
+-- Failed in 'find_multiples'
+testIntegrate("((-1+2*x^4)*(32+7*x^2+64*x^4)*(8+35*x^4+32*x^8)^(1/2))/"
+              "(x^3*(20-x^2+79*x^4-2*x^6+80*x^8))", "x", "alg")
+
 testcase "specific integrals"
 
 testEquals("integrate((x + 2)^2/((x+2)^6 + 1), x)", "atan((x+2)^3)/3")
@@ -684,6 +717,10 @@ testEquals("integrate(cos(x)/(1 + cos(x)), x)", "-sin(x)/(1 + cos(x)) + x")
 testEquals("integrate(cos(a*x)*sin(a*x), x)", "-cos(a*x)^2/(2*a)")
 testEquals("integrate(cosh(a*x)*sinh(a*x), x)",
            "(sinh(a*x)^2 + cosh(a*x)^2)/(4*a)")
+testEquals("integrate(cos(x)/sqrt(x), x = 0..%plusInfinity, _"noPole_")",
+           "1/sqrt(2/%pi)")
+testEquals("integrate(sin(a+%i*log(c*x^2)),x)",
+           "(3*%i*exp(a*%i)^2 + %i*c^2*x^4)/(6*c*x*exp(a*%i))")
 
 testcase "continuity tests"
 

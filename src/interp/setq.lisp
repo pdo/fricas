@@ -44,8 +44,7 @@
 (setq |$algebraOutputStream|
       (setq |$fortranOutputStream|
             (setq |$texOutputStream|
-                  (setq |$formulaOutputStream|
-                        (make-synonym-stream '*standard-output*)))))
+                        (make-synonym-stream '*standard-output*))))
 
 (defvar |$frameMessages| nil)
 (defvar |$displayStartMsgs| nil)
@@ -435,20 +434,6 @@
 (SETQ |$NRTmonitorIfTrue| NIL)
 
 (SETQ |$useConvertForCoercions| NIL)
-
-;; ---- start of initial settings for variables used in test.boot
-
-(SETQ |$runTestFlag| NIL)          ;; referenced by maPrin to stash
-                                   ;; output by recordAndPrint to not
-                                   ;; print type/time
-(SETQ |$mkTestFlag| NIL)           ;; referenced by READLN to stash input
-                                   ;; by maPrin to stash output
-                                   ;; by recordAndPrint to write i/o
-                                   ;; onto $testStream
-(SETQ |$mkTestOutputStack| NIL)    ;; saves output for $testStream
-                                   ;; (see maPrin)
-
-;; ---- end of initial settings for variables used in test.boot
 
 
 

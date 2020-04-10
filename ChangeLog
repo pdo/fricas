@@ -1,3 +1,251 @@
+2020-04-09  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/intalg.spad: Fix a typo
+
+2020-04-09  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/intalg.spad: Fix check for
+	unintegrable functions
+
+2020-04-06  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/poly.spad: Add Yun squareFree for
+	finite fields
+
+2020-04-06  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/intrf.spad: Speed up 'split'
+
+2020-03-30  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/interp/daase.lisp: Minor cleanup
+
+2020-03-30  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/curve.spad, src/algebra/divisor.spad:
+	Generalize interface to divisors
+
+2020-03-30  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/integrat.spad: Add forgotten
+	call to 'rischNormalize'
+
+2020-03-30  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/interp/i-syscmd.boot: Fix regression due
+	to recent change
+
+2020-03-29  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/leadcdet.spad: Detect bad reduction
+
+2020-03-29  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/amodgcd.spad, src/algebra/evalut.spad:
+	Detect division by zero during evaluation
+
+2020-03-20  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/ffcat.spad: Unify with finite
+	rank algebra
+
+2020-03-18  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/Makefile.in, src/algebra/indexedp.spad,
+	src/algebra/multpoly.spad, src/algebra/poly.spad,
+	src/algebra/polycat.spad: Add FreeModuleCategory
+	to polynomial rings
+
+2020-03-18  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/expr.spad, src/algebra/opalg.spad,
+	src/algebra/pgcd.spad, src/algebra/xlpoly.spad,
+	src/algebra/xpoly.spad: Cleanup related to free
+	modules
+
+2020-03-14  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/interp/buildom.boot, src/interp/i-funsel.boot,
+	src/interp/lisplib.boot, src/interp/modemap.boot,
+	src/interp/property.lisp: Simplify builtin domains
+
+2020-03-14  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/coerce.spad: Retractable implies
+	Coercible in opposite direction
+
+2020-03-14  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/modgcd.spad: Remove 'modularGcd'
+
+2020-03-14  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/rdeefx.spad: Fix error due to
+	handling of gamma incomplete
+
+2020-03-14  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/formula.spad: Remove
+	src/algebra/Makefile.in, src/interp/i-output.boot,
+	src/interp/macros.lisp, src/interp/msgdb.boot,
+	src/interp/setq.lisp, src/interp/setvars.boot,
+	src/interp/setvart.boot: Adjust
+
+2020-03-11  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/mathml.spad, src/algebra/tex.spad,
+	src/algebra/texmacs.spad: Do not use 'stringify'
+
+2020-03-10  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/interp/int-top.boot, src/interp/nruncomp.boot,
+	src/interp/nrunopt.boot, src/interp/spaderror.lisp:
+	Minor cleanups
+
+2020-03-10  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/interp/g-util.boot, src/interp/macros.lisp,
+	src/interp/scwrap2.boot: Convert few function to Boot
+
+2020-03-09  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/mring.spad: Simplify and generalize
+
+2020-03-09  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/fortout.spad: Fix output of PAREN
+
+2020-03-09  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/catdef.spad, src/algebra/equation1.spad,
+	src/algebra/ffcat.spad, src/algebra/matrix.spad,
+	src/algebra/vector.spad: Remove VectorSpace
+	src/algebra/Makefile.in: Adjust
+
+2020-03-08  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/interp/macros.lisp, src/interp/msgdb.boot:
+	More explicit stream usage
+
+2020-03-08  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/interp/cstream.boot: Remove unused functions
+
+2020-03-06  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/genups.spad: Fix type conditions,
+	remove unimplemented signatures
+
+2020-03-06  Neven Sajko <nsajko@gmail.com>
+
+	* src/graph/include/write.h, src/graph/view2D/write2d.c,
+	src/graph/view3D/write3d.c:  Prevent signed integer overflow
+
+2020-03-04  Neven Sajko <nsajko@gmail.com>
+
+	* src/sman/sman.c: Prevent heap buffer overflow
+
+2020-03-04  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/nlode.spad: Better recognize
+	exact equations
+
+2020-03-04  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/intaf.spad, src/algebra/intalg.spad,
+	src/algebra/intef.spad, src/input/integ.input:
+	Handle recursion for algebraic integrals
+
+2020-03-03  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/interp/i-eval.boot: Initialize variable
+
+2020-03-02  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/formula.spad, src/algebra/mathml.spad,
+	src/algebra/tex.spad, src/algebra/texmacs.spad:
+	Get rid of string quotes in derivatives
+
+2020-03-02  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/genups.spad: Generalize
+	src/algebra/Makefile.in: Adjust
+
+2020-03-02  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/fspace.spad: Fix input form of
+	formal derivatives
+
+2020-02-29  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/intpar.spad: Shortcut for easy
+	cases of algebraic RDE
+
+2020-02-29  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/interp/cstream.boot: Avoid stack overflow
+	when skipping a lot of lines
+
+2020-02-28  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/intalg.spad:  Be more careful declaring
+	nonintegrability
+
+2020-02-28  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/fspace.spad, src/algebra/op.spad:
+	Fix display of derivative of gamma incomplete
+
+2020-02-21  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/fs2ups.spad, src/algebra/limitps.spad:
+	Add expanders for Ei, Ci, Chi and dilog at 0
+
+2020-02-21  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/interp/msgdb.boot: Fix a typo
+
+2020-02-16  Ralf Hemmecke  <ralf@hemmecke.org>
+
+	* src/algebra/gdirprod.spad, src/algebra/vector.spad: generalize
+	direct product
+
+2020-02-09  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/interp/define.boot, src/interp/info.boot,
+	src/interp/macros.lisp, src/interp/msgdb.boot:
+	Minor cleanups
+
+2020-02-09  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/hyper/htinp.c, src/hyper/hyper.c,
+	src/include/htinp.H1, src/interp/Makefile.in,
+	src/interp/i-toplev.boot, src/interp/record.boot,
+	src/interp/setq.lisp: Remove old unused testing
+	machinery
+
+2020-02-07  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/intaf.spad, src/algebra/intpar.spad:
+	More reqular interface
+
+2020-02-04  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/algebra/efstruc.spad: Avoid division by zero
+
+2020-02-04  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+        * src/algebra/si.spad: Avoid overflow
+
+2020-02-03  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
+
+	* src/interp/i-output.boot: Detect too wide output
+
+2020-01-28  Franz Lehner  <lehner@math.tugraz.at>
+
+	* src/algebra/distro.spad: Fix bug in
+	freeMultiplicativeConvolution
+
 2020-01-09  Waldek Hebisch  <hebisch@math.uni.wroc.pl>
 
 	* config/fricas_c_macros.h.in, configure.ac,

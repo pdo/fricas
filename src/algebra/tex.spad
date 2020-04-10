@@ -149,7 +149,6 @@ TexFormat() : public == private where
     postcondition :  S -> S
     splitLong :      (S, I) -> L S
     splitLong1 :     (S, I) -> L S
-    stringify :      E -> S
     ungroup :        S -> S
 
     -- public function definitions
@@ -231,8 +230,6 @@ TexFormat() : public == private where
         if (str.i =$Character plus) and (str.(i+1) =$Character minus)
           then setelt!(str, i, char " ")$S
       str
-
-    stringify expr == (mathObject2String$Lisp expr) pretend S
 
     lineConcat( line : S, lines : L S ) : L S ==
       length := #line
@@ -319,6 +316,27 @@ TexFormat() : public == private where
     parenthesize str ==
       concat ["\left( ",str," \right)"]
 
+    format_prime(args : L E, prec : I) : S ==
+        arg2 := second(args)
+        narg2 :=
+            string?(arg2) =>
+                arg2s : S := string(arg2)
+                c_char := char(",")
+                every?(c +-> c = c_char, arg2s) =>
+                    prime_str := "\prime"
+                    n := #arg2s
+                    n = 1 => message(prime_str)
+                    res := new(n*#prime_str, char(" "))
+                    k := 1
+                    for i in 1..n repeat
+                        for j in 1..#prime_str repeat
+                            qsetelt!(res, k, qelt(prime_str, j))
+                            k := k + 1
+                    message(res)
+                arg2
+            arg2
+        formatSpecial('SUPERSUB, [first args, empty()$E, narg2], prec)
+
     formatSpecial(op : Sy, args : L E, prec : I) : S ==
         arg : E
         prescript : Boolean := false
@@ -352,7 +370,7 @@ TexFormat() : public == private where
         op = 'PAREN =>
             group parenthesize ungroup formatExpr(first args, minPrec)
         op = 'PRIME =>
-            formatSpecial('SUPERSUB, [first args, " "::E, second(args)], prec)
+            format_prime(args, prec)
         op = 'OVERBAR =>
             empty?(args) => ""
             group concat ["\overline ", formatExpr(first args, minPrec)]
@@ -533,10 +551,9 @@ TexFormat() : public == private where
       intSplitLen : Integer := 20
       str, s : S
       atom?(expr) =>
-        str := stringify expr
-        len := #str
         integer?(expr) =>
           i := integer(expr)
+          str := string(i)
           if (i < 0) or (i > 9)
             then
               group
@@ -552,9 +569,17 @@ TexFormat() : public == private where
                    concat [nstr, " ", str]
                  elt(nstr, segment(2)$US)
             else str
-        str = "%pi" => "\pi"
-        str = "%e"  => "e"
-        str = "%i"  => "i"
+        if symbol?(expr) then
+            es := symbol(expr)
+            es = "%pi"::Sy => return "\pi"
+            es = "%e"::Sy => return "e"
+            es = "%i"::Sy  => return "i"
+            str := string(es)
+        else if string?(expr) then
+            str := string(expr)
+        else
+            error "Unrecognized atom in OutputForm"
+        len := #str
         len > 1 and str.1 = char "%" and str.2 = char "%" =>
           u : US := segment(3, len)$US
           concat(" \%\%", str.u)

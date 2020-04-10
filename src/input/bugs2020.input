@@ -1,0 +1,63 @@
+)set break resume
+)expose UnittestCount UnittestAux Unittest
+
+testsuite "bugs2020"
+
+testcase "operations on SingleInteger"
+
+testTrue("(factor(max()$SingleInteger); true)")
+testTrue("(squareFree(max()$SingleInteger); true)")
+
+i : Integer
+j : Integer
+
+i := prevPrime((max()$SingleInteger)::Integer)
+testTrue("prime?(i::SingleInteger)")
+
+do_sint_tst() ==
+    free i, j
+    if max()$SingleInteger > 2^128 then
+        print(message("max()$SingleInteger is surprizingly big")$OutputForm)
+    else
+        i := 8
+        j := 31
+        binomial(j, i) > max()$SingleInteger =>
+            testTrue("binomial(j, i) <= max()$SingleInteger")
+        repeat
+            p := binomial(j, i)
+            i*p > max()$SingleInteger => break
+            j := j + 1
+            j < 3*i => "iterate"
+            i := i + 1
+        testTrue("(binomial(j::SingleInteger, i::SingleInteger); true)")
+
+do_sint_tst()
+
+testcase "singularities in realElementary"
+
+testEquals("realElementary(acot(x*acosh(1)))", "%pi/2")
+testEquals("realElementary(asin(1 + x*acosh(1)))", "%pi/2")
+testEquals("realElementary(asin(-1 + x*acosh(1)))", "-%pi/2")
+testEquals("realElementary(acsc(1 + x*acosh(1)))", "%pi/2")
+testEquals("realElementary(acsc(-1 + x*acosh(1)))", "-%pi/2")
+
+testcase "input form of derivative"
+
+f := operator 'f
+fe := D(f(a, b), b)
+fe2 := eval(fe, a = b)
+i_form := fe2::InputForm
+testTrue("(fe2 = interpret(i_form))@Boolean")
+
+testcase "CoercibleFrom"
+
+testTrue("Polynomial(Integer) has CoercibleFrom(Integer)")
+
+testcase "bad reduction"
+
+p := a^4*b^2*d^4*x^4 + (-2*a^2*b^2 + a^4)*d^2*x^2 + b^2 - a^2
+pu := univariate(p, x)
+-- used to crash
+testTrue("(ll := [factorPolynomial(pu) for i in 1..5000]; true)")
+
+statistics()
